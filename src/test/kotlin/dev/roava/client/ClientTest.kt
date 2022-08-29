@@ -22,9 +22,8 @@
  * SOFTWARE.
  */
 
-package client
+package dev.roava.client
 
-import dev.roava.client.RoavaClient
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

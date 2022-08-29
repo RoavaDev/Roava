@@ -22,9 +22,8 @@
  * SOFTWARE.
  */
 
-package group
+package dev.roava.group
 
-import dev.roava.group.Group
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*

@@ -22,9 +22,8 @@
  * SOFTWARE.
  */
 
-package user
+package dev.roava.user
 
-import dev.roava.user.User
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
