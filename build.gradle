@@ -9,6 +9,7 @@ plugins {
 
 group = 'dev.roava'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 ext {
     slf4jVersion = '1.7.36'
@@ -36,6 +37,74 @@ dependencies {
     compileClasspath 'org.jetbrains.dokka:dokka-base:1.7.10'
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'Roava'
+                description = 'A unique Roblox API wrapper written in Java'
+                url = 'https://github.com/RoavaDev/Roava'
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'https://mit-license.org/'
+                        distribution = 'repo'
+                    }
+                }
+
+                issueManagement {
+                    system = 'github'
+                    url = 'https://github.com/StayBlueee/Roava/issues'
+                }
+
+                scm {
+                    url = 'https://github.com/RoavaDev/Roava'
+                    connection = 'scm:git:git://https://github.com/RoavaDev/Roava.git'
+                }
+
+                developers {
+                    developer {
+                        name = 'Roava Development Team'
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def mavenUsername = findProperty('mavenUsername')
+            def mavenPassword = findProperty('mavenPassword')
+
+            if (isReleaseVersion) {
+                url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2'
+            } else {
+                url = 'https://s01.oss.sonatype.org/content/repositories/snapshots'
+            }
+
+            if (mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
+                }
+            }
+        }
+    }
+
+    signing {
+        def signingKey = findProperty('signingKey')
+        def signingPassword = findProperty('signingPassword')
+
+        required isReleaseVersion && gradle.taskGraph.hasTask("publish") && signingKey != null && signingPassword != null
+
+        useInMemoryPgpKeys(signingKey, signingPassword)
+
+        sign publishing.publications.maven
+    }
+}
+
 test {
     useJUnitPlatform()
 }
@@ -50,10 +119,6 @@ compileTestKotlin {
 
 tasks.named("dokkaHtml") {
     suppressInheritedMembers.set(true)
-}
-
-tasks.named("test") {
-
 }
 
 test.finalizedBy(jacocoTestReport)
