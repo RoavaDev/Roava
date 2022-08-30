@@ -33,7 +33,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
 
-    compileClasspath 'org.jetbrains.dokka:dokka-base:1.7.10'
+    compileOnly 'org.jetbrains.dokka:dokka-base:1.7.10'
 }
 
 publishing {
@@ -96,7 +96,7 @@ publishing {
     def signingKey = findProperty('signingKey')
     def signingPassword = findProperty('signingPassword')
 
-    if (isReleaseVersion && signingKey != null && signingPassword != null && gradle.taskGraph.hasTask('publish')) {
+    if (isReleaseVersion && signingKey != null && signingPassword != null) {
         signing {
             useInMemoryPgpKeys(signingKey, signingPassword)
 
@@ -119,6 +119,11 @@ compileTestKotlin {
 
 tasks.named("dokkaHtml") {
     suppressInheritedMembers.set(true)
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 test.finalizedBy(jacocoTestReport)
