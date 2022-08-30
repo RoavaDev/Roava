@@ -31,7 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          build_dir: build/dokkaHtmlMultiModule
+          build_dir: build/dokka
 
       - name: "Publish with Gradle"
         uses: gradle/gradle-build-action@v2     
