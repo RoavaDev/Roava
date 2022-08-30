@@ -32,7 +32,6 @@ import okhttp3.Response
  * For Intercepting calls and adding the X-CSRF-TOKEN to the header if the original request failed (for internal use only).
  */
 internal class RoavaInterceptor: Interceptor {
-    // FIXME: Cache the X-CSRF-TOKEN to not spam unnecessary requests
     override fun intercept(chain: Interceptor.Chain): Response {
         var response = chain.proceed(chain.request())
 
