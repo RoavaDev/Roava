@@ -20,6 +20,18 @@ jobs:
         with:
           java-version: 8
           distribution: "zulu"
+          
+      - name: "Generate Dokka"
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: dokkaHtmlMultiModule
+          
+      - name: "Publish Documentation"
+        uses: crazy-max/ghaction-github-pages@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          build_dir: build/dokkaHtmlMultiModule
 
       - name: "Publish with Gradle"
         uses: gradle/gradle-build-action@v2     
