@@ -32,7 +32,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 /**
- * GroupApi(for internal use only)
+ * GroupApi (for internal use only)
  */
 interface GroupApi {
     @GET("/v1/groups/{groupId}")
