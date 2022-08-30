@@ -24,7 +24,7 @@ jobs:
       - name: "Generate Dokka"
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: dokka
+          arguments: dokkaHtml
           
       - name: "Publish Documentation"
         uses: crazy-max/ghaction-github-pages@v3
