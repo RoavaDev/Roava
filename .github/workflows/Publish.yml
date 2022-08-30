@@ -1,4 +1,4 @@
-name: publish
+name: Publish
 
 on:
   push:
@@ -22,11 +22,11 @@ jobs:
           distribution: "zulu"
 
       - name: "Publish with Gradle"
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2          
         with: 
           arguments: |
             test publish
-            -PsigningKey="${{ secrets.SIGNING_KEY }}"
-            -PsigningPassword="${{ secrets.SIGNING_PASSWORD }}"
-            -PmavenUsername="${{ secrets.MAVEN_USERNAME }}"
-            -PmavenPassword="${{ secrets.MAVEN_PASSWORD }}"
+            -PsigningKey='${{ secrets.SIGNING_KEY }}'
+            -PsigningPassword='${{ secrets.SIGNING_PASSWORD }}'
+            -PmavenUsername='${{ secrets.MAVEN_USERNAME }}'
+            -PmavenPassword='${{ secrets.MAVEN_PASSWORD }}'
