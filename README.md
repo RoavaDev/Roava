@@ -1,7 +1,9 @@
 [![Discord Server](https://img.shields.io/discord/958199132026200084?label=Roava&logo=discord&style=flat-square)](https://discord.gg/edKHJCqaYs)
-[![CI](https://img.shields.io/github/workflow/status/RoavaDev/Roava/CI/master?logo=github&style=flat-square)](https://github.com/RoavaDev/Roava/actions/workflows/CI.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/RoavaDev/Roava/CI.yml?logo=github&style=flat-square)]([https://img.shields.io/github/actions/workflow/status/RoavaDev/Roava/test.yml?branch=master](https://img.shields.io/github/actions/workflow/status/RoavaDev/Roava/CI.yml?logo=github&style=flat-square))
 [![CodeFactor](https://img.shields.io/codefactor/grade/github/roavadev/roava/master?style=flat-square)](https://www.codefactor.io/repository/github/roavadev/roava)
 [![Coverage](https://img.shields.io/codecov/c/github/RoavaDev/Roava?style=flat-square)](https://app.codecov.io/gh/RoavaDev/Roava)
+
+## Roava will likely be going under a massive re-write within the next month or two with breaking changes.
 
 Roava is a quick, and easy to set up Roblox API wrapper written in Kotlin, but it can support other JVM languages as well. 
 
