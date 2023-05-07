@@ -208,6 +208,26 @@ class Group {
         }
     }
 
+    @Throws(RuntimeException::class)
+    fun getUserRank(user: User): GroupRole {
+        try {
+            val groupData = request.createRequest(GroupApi::class.java, "groups")
+                .getUserRoleInfo(user.id)
+                .execute()
+                .body()
+
+            for (group in groupData?.data!!) {
+                if (group.groupData?.id!! == id) {
+                    return GroupRole(group.roleData!!)
+                }
+            }
+
+            throw RuntimeException("The provided user is not a part of this group!")
+        } catch(exception: Exception) {
+            throw RuntimeException("Could not fetch the user's groups!")
+        }
+    }
+
     /**
      * Method to set the rank of a user in a group provided both the user's ID and the role's rank or roleset ID
      *
@@ -229,11 +249,42 @@ class Group {
             roleNumber = getRole(roleNumber).id
         }
 
-        try {
+        runCatching {
             client.request.createRequest(GroupApi::class.java, "groups")
                 .rankUser(id, userId, RankData(roleNumber))
-                .execute()
-        } catch(exception: Exception) {
+                .execute().isSuccessful.also {
+                    if (!it) {
+                        throw RuntimeException("Could not rank the provided user!")
+                    }
+                }
+        }.onFailure {
+            throw RuntimeException("Could not rank the provided user!")
+        }
+    }
+
+    @Throws(RuntimeException::class)
+    fun rankUser(user: User, roleNumber: Int) {
+        if (client == null) {
+            throw RuntimeException("No client has been provided!")
+        }
+
+        // Make the role number mutable
+        var roleNumber = roleNumber
+
+        // Get the roleset ID if a rank is provided as a role number
+        if (roleNumber <= 255) {
+            roleNumber = getRole(roleNumber).id
+        }
+
+        runCatching {
+            client.request.createRequest(GroupApi::class.java, "groups")
+                .rankUser(id, user.id, RankData(roleNumber))
+                .execute().isSuccessful.also {
+                    if (!it) {
+                        throw RuntimeException("Could not rank the provided user!")
+                    }
+                }
+        }.onFailure {
             throw RuntimeException("Could not rank the provided user!")
         }
     }
@@ -253,6 +304,21 @@ class Group {
         try {
             client.request.createRequest(GroupApi::class.java, "groups")
                 .exileUser(id, userId)
+                .execute()
+        } catch(exception: Exception) {
+            throw RuntimeException("Could not exile the provided user!")
+        }
+    }
+
+    @Throws(RuntimeException::class)
+    fun exileUser(user: User) {
+        if (client == null) {
+            throw RuntimeException("No client has been provided!")
+        }
+
+        try {
+            client.request.createRequest(GroupApi::class.java, "groups")
+                .exileUser(id, user.id)
                 .execute()
         } catch(exception: Exception) {
             throw RuntimeException("Could not exile the provided user!")
