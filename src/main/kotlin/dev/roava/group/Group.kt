@@ -210,22 +210,7 @@ class Group {
 
     @Throws(RuntimeException::class)
     fun getUserRank(user: User): GroupRole {
-        try {
-            val groupData = request.createRequest(GroupApi::class.java, "groups")
-                .getUserRoleInfo(user.id)
-                .execute()
-                .body()
-
-            for (group in groupData?.data!!) {
-                if (group.groupData?.id!! == id) {
-                    return GroupRole(group.roleData!!)
-                }
-            }
-
-            throw RuntimeException("The provided user is not a part of this group!")
-        } catch(exception: Exception) {
-            throw RuntimeException("Could not fetch the user's groups!")
-        }
+        return getUserRank(user.id)
     }
 
     /**
@@ -264,29 +249,7 @@ class Group {
 
     @Throws(RuntimeException::class)
     fun rankUser(user: User, roleNumber: Int) {
-        if (client == null) {
-            throw RuntimeException("No client has been provided!")
-        }
-
-        // Make the role number mutable
-        var roleNumber = roleNumber
-
-        // Get the roleset ID if a rank is provided as a role number
-        if (roleNumber <= 255) {
-            roleNumber = getRole(roleNumber).id
-        }
-
-        runCatching {
-            client.request.createRequest(GroupApi::class.java, "groups")
-                .rankUser(id, user.id, RankData(roleNumber))
-                .execute().isSuccessful.also {
-                    if (!it) {
-                        throw RuntimeException("Could not rank the provided user!")
-                    }
-                }
-        }.onFailure {
-            throw RuntimeException("Could not rank the provided user!")
-        }
+        rankUser(user.id, roleNumber)
     }
 
     /**
@@ -301,27 +264,17 @@ class Group {
             throw RuntimeException("No client has been provided!")
         }
 
-        try {
+        runCatching {
             client.request.createRequest(GroupApi::class.java, "groups")
                 .exileUser(id, userId)
                 .execute()
-        } catch(exception: Exception) {
+        }.onFailure {
             throw RuntimeException("Could not exile the provided user!")
         }
     }
 
     @Throws(RuntimeException::class)
     fun exileUser(user: User) {
-        if (client == null) {
-            throw RuntimeException("No client has been provided!")
-        }
-
-        try {
-            client.request.createRequest(GroupApi::class.java, "groups")
-                .exileUser(id, user.id)
-                .execute()
-        } catch(exception: Exception) {
-            throw RuntimeException("Could not exile the provided user!")
-        }
+        exileUser(user.id)
     }
 }
