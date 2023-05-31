@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 /**
  * UsernameRequestData (for internal use only)
  */
-data class UsernameRequestData(
+data class UsernameRequest(
     @JsonProperty("usernames")
     val usernames: List<String>?
 )
