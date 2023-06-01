@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 RoavaDev
+ * Copyright (c) 2023 RoavaDev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,12 @@
  * SOFTWARE.
  */
 
-package dev.roava.json
+package dev.roava.json.user
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import dev.roava.json.group.GroupFullData
 
-/**
- * UserRoleData (for internal use only)
- */
-data class UserRoleData(
-    @JsonProperty("roles")
+data class UserRolesData(
+    @JsonProperty("data")
     val data: List<GroupFullData>? = null
 )

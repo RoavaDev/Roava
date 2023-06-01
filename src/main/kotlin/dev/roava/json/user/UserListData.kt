@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 RoavaDev
+ * Copyright (c) 2023 RoavaDev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,11 @@
  * SOFTWARE.
  */
 
-package dev.roava.json
+package dev.roava.json.user
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
-/**
- * UserData (for internal use only)
- */
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class UserData(
-    @JsonProperty("username")
-    val name: String?,
-    @JsonProperty("displayName")
-    val displayName: String?,
-    @JsonProperty("userId")
-    val id: Long?
+data class UserListData(
+    @JsonProperty("data")
+    val data: List<UserData>?
 )

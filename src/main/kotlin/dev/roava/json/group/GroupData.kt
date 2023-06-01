@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 RoavaDev
+ * Copyright (c) 2023 RoavaDev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,22 @@
  * SOFTWARE.
  */
 
-package dev.roava.json
+package dev.roava.json.group
 
-/**
- * RankData (for internal use only)
- */
-data class RankData(
-    val roleId: Int
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import dev.roava.json.user.UserData
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class GroupData(
+    @JsonProperty("name")
+    val name: String?,
+    @JsonProperty("description")
+    val description: String?,
+    @JsonProperty("memberCount")
+    val memberCount: Int?,
+    @JsonProperty("owner")
+    val owner: UserData?,
+    @JsonProperty("id")
+    val id: Int? = null
 )

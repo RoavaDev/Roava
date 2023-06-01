@@ -29,8 +29,8 @@ import dev.roava.api.GroupApi
 import dev.roava.api.UserApi
 import dev.roava.client.RoavaRequest
 import dev.roava.group.Group
-import dev.roava.json.UserData
-import dev.roava.json.UsernameRequestData
+import dev.roava.json.user.UserData
+import dev.roava.json.user.UserNameRequest
 
 /**
  * A class which represents a User which is not authenticated by the [dev.roava.client.RoavaClient].
@@ -99,7 +99,7 @@ class User {
     constructor(username: String) {
         try {
             val usernameData = request.createRequest(UserApi::class.java, "users")
-                .getUsernameInformation(UsernameRequestData(listOf(username)))
+                .getUsernameInformation(UserNameRequest(listOf(username)))
                 .execute()
                 .body()
 

@@ -27,8 +27,8 @@ package dev.roava.group
 import dev.roava.api.GroupApi
 import dev.roava.client.RoavaClient
 import dev.roava.client.RoavaRequest
-import dev.roava.json.GroupData
-import dev.roava.json.RankData
+import dev.roava.json.group.GroupData
+import dev.roava.json.group.RoleRequest
 import dev.roava.user.User
 
 /**
@@ -236,7 +236,7 @@ class Group {
 
         runCatching {
             client.request.createRequest(GroupApi::class.java, "groups")
-                .rankUser(id, userId, RankData(roleNumber))
+                .rankUser(id, userId, RoleRequest(roleNumber))
                 .execute().isSuccessful.also {
                     if (!it) {
                         throw RuntimeException("Could not rank the provided user!")
