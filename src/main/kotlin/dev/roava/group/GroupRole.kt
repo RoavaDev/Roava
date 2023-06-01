@@ -24,7 +24,7 @@
 
 package dev.roava.group
 
-import dev.roava.json.GroupRoleData
+import dev.roava.json.group.RoleData
 
 /**
  * Group Role (for internal use only)
@@ -34,5 +34,5 @@ data class GroupRole(
     val rank: Int,
     val name: String
 ) {
-    constructor(groupRole: GroupRoleData): this(groupRole.id!!, groupRole.rank!!, groupRole.name!!)
+    constructor(groupRole: RoleData): this(groupRole.id!!, groupRole.rank!!, groupRole.name!!)
 }
