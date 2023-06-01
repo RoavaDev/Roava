@@ -31,5 +31,5 @@ import retrofit2.http.Path
 
 interface InventoryApi {
     @GET("/v1/users/{userId}/items/{itemType}/{itemId}")
-    fun exileUser(@Path("userId") userId: Long, @Path("itemType") itemType: String, @Path("itemId") itemId: Long): Call<ItemListData>
+    fun getUserItems(@Path("userId") userId: Long, @Path("itemType") itemType: String, @Path("itemId") itemId: Long): Call<ItemListData>
 }

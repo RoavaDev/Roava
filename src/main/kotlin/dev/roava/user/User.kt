@@ -26,6 +26,7 @@ package dev.roava.user
 
 import dev.roava.api.FriendApi
 import dev.roava.api.GroupApi
+import dev.roava.api.InventoryApi
 import dev.roava.api.UserApi
 import dev.roava.client.RoavaRequest
 import dev.roava.group.Group
@@ -183,5 +184,47 @@ class User {
         }
 
         return false
+    }
+
+    /**
+     * Method to get if a User has a gamepass
+     */
+
+    /*
+    fun hasGamepass(gamepassId: Long): Boolean {
+        runCatching {
+            val gamepasses = request.createRequest(InventoryApi::class.java, "inventory")
+                .getUserItems(id, "gamepass", gamepassId)
+                .execute()
+                .body()?.items
+
+            gamepasses?.let {
+                return it.isNotEmpty()
+            }
+        }.onFailure {
+            throw RuntimeException("Could not fetch the user's items!")
+        }
+
+        return false
+    }
+    */
+
+    /**
+     * Method to get if a User has a gamepass
+     *
+     * @param[gamepassId] The gamepass's ID
+     * @throws[RuntimeException]
+     * @return[Boolean]
+     */
+    @Throws(RuntimeException::class)
+    fun hasGamepass(gamepassId: Long) = runCatching {
+        val gamepasses = request.createRequest(InventoryApi::class.java, "inventory")
+            .getUserItems(id, "gamepass", gamepassId)
+            .execute()
+            .body()?.items
+
+        gamepasses?.isNotEmpty() ?: false
+    }.getOrElse {
+        throw RuntimeException("Could not fetch the user's items!")
     }
 }
