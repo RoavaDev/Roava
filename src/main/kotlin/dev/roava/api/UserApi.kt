@@ -24,9 +24,9 @@
 
 package dev.roava.api
 
-import dev.roava.json.UserData
-import dev.roava.json.UsersData
-import dev.roava.json.UsernameRequestData
+import dev.roava.json.user.UserData
+import dev.roava.json.user.UserListData
+import dev.roava.json.user.UserNameRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -41,5 +41,5 @@ interface UserApi {
     fun getUserInformation(@Path("userId") userId: Long): Call<UserData>
 
     @POST("/v1/usernames/users")
-    fun getUsernameInformation(@Body data: UsernameRequestData): Call<UsersData>
+    fun getUsernameInformation(@Body data: UserNameRequest): Call<UserListData>
 }
