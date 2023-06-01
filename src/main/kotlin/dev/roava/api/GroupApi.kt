@@ -24,10 +24,10 @@
 
 package dev.roava.api
 
-import dev.roava.json.GroupData
-import dev.roava.json.GroupRolesData
-import dev.roava.json.RankData
-import dev.roava.json.UserRoleData
+import dev.roava.json.group.GroupData
+import dev.roava.json.group.RoleListData
+import dev.roava.json.group.RoleRequest
+import dev.roava.json.user.UserRolesData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -39,16 +39,16 @@ interface GroupApi {
     fun getGroupInfo(@Path("groupId") groupId: Int): Call<GroupData>
 
     @GET("/v1/users/{userId}/groups/roles")
-    fun getUserRoleInfo(@Path("userId") userId: Long): Call<UserRoleData>
+    fun getUserRoleInfo(@Path("userId") userId: Long): Call<UserRolesData>
 
     @GET("/v1/groups/{groupId}/roles")
-    fun getGroupRoles(@Path("groupId") groupId: Int): Call<GroupRolesData>
+    fun getGroupRoles(@Path("groupId") groupId: Int): Call<RoleListData>
 
     @GET("v1/roles")
-    fun getGroupRoleInfo(@Query("ids") roleId: Int): Call<GroupRolesData>
+    fun getGroupRoleInfo(@Query("ids") roleId: Int): Call<RoleListData>
 
     @PATCH("/v1/groups/{groupId}/users/{userId}")
-    fun rankUser(@Path("groupId") groupId: Int, @Path("userId") userId: Long, @Body roleId: RankData): Call<Void>
+    fun rankUser(@Path("groupId") groupId: Int, @Path("userId") userId: Long, @Body roleId: RoleRequest): Call<Void>
 
     @DELETE("/v1/groups/{groupId}/users/{userId}")
     fun exileUser(@Path("groupId") groupId: Int, @Path("userId") userId: Long): Call<Void>

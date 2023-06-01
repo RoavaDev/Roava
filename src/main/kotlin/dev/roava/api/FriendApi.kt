@@ -24,7 +24,7 @@
 
 package dev.roava.api
 
-import dev.roava.json.UsersData
+import dev.roava.json.user.UserListData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,5 +34,5 @@ import retrofit2.http.Path
  */
 interface FriendApi {
     @GET("/v1/users/{userId}/friends")
-    fun getUserFriends(@Path("userId") userId: Long): Call<UsersData>
+    fun getUserFriends(@Path("userId") userId: Long): Call<UserListData>
 }

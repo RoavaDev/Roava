@@ -27,9 +27,6 @@ package dev.roava.json
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
-/**
- * ProfileData (for internal use only)
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ProfileData(
     @JsonProperty("Username")
