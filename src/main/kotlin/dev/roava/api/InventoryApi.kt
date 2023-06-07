@@ -32,4 +32,7 @@ import retrofit2.http.Path
 interface InventoryApi {
     @GET("/v1/users/{userId}/items/{itemType}/{itemId}")
     fun getUserItems(@Path("userId") userId: Long, @Path("itemType") itemType: String, @Path("itemId") itemId: Long): Call<ItemListData>
+
+    @GET("/v1/users/{userId}/items/{itemType}/{itemId}/is-owned")
+    fun getIsOwned(@Path("userId") userId: Long, @Path("itemType") itemType: String, @Path("itemId") itemId: Long): Call<Boolean>
 }
