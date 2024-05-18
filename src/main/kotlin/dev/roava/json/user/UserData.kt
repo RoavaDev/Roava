@@ -34,5 +34,7 @@ data class UserData(
     @JsonProperty("displayName")
     val displayName: String?,
     @JsonProperty("userId")
-    val id: Long?
+    val id: Long?,
+    @JsonProperty("description")
+    val description: String?,
 )
