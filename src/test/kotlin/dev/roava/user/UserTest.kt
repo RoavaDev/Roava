@@ -79,4 +79,11 @@ internal class UserTest {
     fun isInGroup() {
         assertTrue(testUser.isInGroup(15771240))
     }
+
+    @Test
+    fun hasGamepass() {
+        val user = User(72242614)
+
+        assertTrue(user.hasGamepass(13827472))
+    }
 }

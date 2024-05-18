@@ -26,11 +26,12 @@ package dev.roava.user
 
 import dev.roava.api.FriendApi
 import dev.roava.api.GroupApi
+import dev.roava.api.InventoryApi
 import dev.roava.api.UserApi
 import dev.roava.client.RoavaRequest
 import dev.roava.group.Group
-import dev.roava.json.UserData
-import dev.roava.json.UsernameRequestData
+import dev.roava.json.user.UserData
+import dev.roava.json.user.UserNameRequest
 
 /**
  * A class which represents a User which is not authenticated by the [dev.roava.client.RoavaClient].
@@ -102,7 +103,7 @@ class User {
     constructor(username: String) {
         try {
             val usernameData = request.createRequest(UserApi::class.java, "users")
-                .getUsernameInformation(UsernameRequestData(listOf(username)))
+                .getUsernameInformation(UserNameRequest(listOf(username)))
                 .execute()
                 .body()
 
@@ -187,5 +188,24 @@ class User {
         }
 
         return false
+    }
+
+    /**
+     * Method to get if a User has a gamepass
+     *
+     * @param[gamepassId] The gamepass's ID
+     * @throws[RuntimeException]
+     * @return[Boolean]
+     */
+    @Throws(RuntimeException::class)
+    fun hasGamepass(gamepassId: Long) = runCatching {
+        val gamepasses = request.createRequest(InventoryApi::class.java, "inventory")
+            .getIsOwned(id, "gamepass", gamepassId)
+            .execute()
+            .body()
+
+        gamepasses ?: false
+    }.getOrElse {
+        throw RuntimeException("Could not fetch the user's items!")
     }
 }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 RoavaDev
+ * Copyright (c) 2023 RoavaDev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,17 @@
  * SOFTWARE.
  */
 
-package dev.roava.json
+package dev.roava.api
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import dev.roava.json.inventory.ItemListData
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-/**
- * GroupRolesData (for internal use only)
- */
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class GroupRolesData(
-    @JsonProperty("groupId")
-    val id: Int? = 0,
-    @JsonProperty("data")
-    val roles: List<GroupRoleData>? = null
-)
+interface InventoryApi {
+    @GET("/v1/users/{userId}/items/{itemType}/{itemId}")
+    fun getUserItems(@Path("userId") userId: Long, @Path("itemType") itemType: String, @Path("itemId") itemId: Long): Call<ItemListData>
+
+    @GET("/v1/users/{userId}/items/{itemType}/{itemId}/is-owned")
+    fun getIsOwned(@Path("userId") userId: Long, @Path("itemType") itemType: String, @Path("itemId") itemId: Long): Call<Boolean>
+}

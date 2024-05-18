@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 RoavaDev
+ * Copyright (c) 2023 RoavaDev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,13 @@
  * SOFTWARE.
  */
 
-package dev.roava.json
+package dev.roava.json.inventory
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
-/**
- * GroupFullData (for internal use only)
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class GroupFullData(
-    @JsonProperty("group")
-    val groupData: GroupData?,
-    @JsonProperty("role")
-    val roleData: GroupRoleData?
+data class ItemListData(
+    @JsonProperty("data")
+    val items: List<ItemData>
 )
