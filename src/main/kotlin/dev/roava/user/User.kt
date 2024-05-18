@@ -48,7 +48,7 @@ class User {
         displayName = userData.displayName!!
         name = userData.name!!
         id = userData.id!!
-        description = userData.description!!
+        description = userData.description ?: ""
     }
 
     /**
@@ -78,7 +78,7 @@ class User {
             displayName = userData?.displayName!!
             name = userData.name!!
             id = userData.id!!
-            description = userData.description!!
+            description = userData.description ?: ""
         } catch(exception: Exception) {
             throw RuntimeException("The provided user ID is invalid!")
         }
@@ -112,7 +112,7 @@ class User {
             displayName = userData?.displayName!!
             name = userData.name!!
             id = userData.id!!
-            description = userData.description!!
+            description = userData.description ?:""
         } catch(exception: Exception) {
             throw RuntimeException("The provided username is invalid!")
         }
