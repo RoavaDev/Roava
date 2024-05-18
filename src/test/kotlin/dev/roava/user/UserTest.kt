@@ -86,4 +86,9 @@ internal class UserTest {
 
         assertTrue(user.hasGamepass(13827472))
     }
+
+    @Test
+    fun testDescription() {
+        assertEquals(testUser.description, "This is a test description")
+    }
 }
