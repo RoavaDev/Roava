@@ -243,7 +243,7 @@ class Group {
                     }
                 }
         }.onFailure {
-            throw RuntimeException("Could not rank the provided user!")
+            throw RuntimeException("Could not rank user due to: ${it.message}")
         }
     }
 
