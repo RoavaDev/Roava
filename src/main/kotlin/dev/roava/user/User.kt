@@ -32,6 +32,7 @@ import dev.roava.client.RoavaRequest
 import dev.roava.group.Group
 import dev.roava.json.user.UserData
 import dev.roava.json.user.UserNameRequest
+import retrofit2.HttpException
 
 /**
  * A class which represents a User which is not authenticated by the [dev.roava.client.RoavaClient].
@@ -154,17 +155,27 @@ class User {
     fun getGroups(): List<Group> {
         val groups = mutableListOf<Group>()
 
-        try {
-            val groupData = request.createRequest(GroupApi::class.java, "groups")
+        val result = runCatching {
+            request.createRequest(GroupApi::class.java, "groups")
                 .getUserRoleInfo(id)
                 .execute()
-                .body()
+        }
 
+        result.onFailure { exception ->  
+            if (exception is HttpException) {
+                val errorCode = exception.code()
+                val message = exception.message()
+
+                throw RuntimeException("Ranking user with id ${this.id} failed with message \"$message\" and response code $errorCode")
+            } else {
+                throw RuntimeException("An unknown error has occurred while fetching the user's groups!")
+            }
+        }.onSuccess {
+            val groupData = it.body()
+            
             for (group in groupData?.data!!) {
                 groups.add(Group(group.groupData!!))
             }
-        } catch(exception: Exception) {
-            throw RuntimeException("Could not fetch the user's groups!")
         }
 
         return groups.toList()

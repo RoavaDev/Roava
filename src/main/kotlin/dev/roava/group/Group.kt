@@ -30,6 +30,7 @@ import dev.roava.client.RoavaRequest
 import dev.roava.json.group.GroupData
 import dev.roava.json.group.RoleRequest
 import dev.roava.user.User
+import retrofit2.HttpException
 
 /**
  * A class which represents a Group.
@@ -234,16 +235,21 @@ class Group {
             roleNumber = getRole(roleNumber).id
         }
 
-        runCatching {
+        val result = runCatching {
             client.request.createRequest(GroupApi::class.java, "groups")
                 .rankUser(id, userId, RoleRequest(roleNumber))
-                .execute().isSuccessful.also {
-                    if (!it) {
-                        throw RuntimeException("Could not rank the provided user!")
-                    }
-                }
-        }.onFailure {
-            throw RuntimeException("Could not rank user due to: ${it.message}")
+                .execute()
+        }
+
+        result.onFailure { exception ->
+            if (exception is HttpException) {
+                val errorCode = exception.code()
+                val message = exception.message()
+
+                throw RuntimeException("Ranking user with id $userId failed with message \"$message\" and response code $errorCode")
+            } else {
+                throw RuntimeException("An unknown error has occurred while ranking the user!")
+            }
         }
     }
 
