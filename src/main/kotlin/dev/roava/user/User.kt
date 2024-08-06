@@ -24,15 +24,12 @@
 
 package dev.roava.user
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import dev.roava.api.*
 import dev.roava.client.RoavaRequest
 import dev.roava.group.Group
-import dev.roava.json.user.ThumbnailListData
 import dev.roava.json.user.UserData
 import dev.roava.json.user.UserNameRequest
 import retrofit2.HttpException
-import java.net.URI
 
 /**
  * A class which represents a User which is not authenticated by the [dev.roava.client.RoavaClient].
