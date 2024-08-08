@@ -24,10 +24,7 @@
 
 package dev.roava.user
 
-import dev.roava.api.FriendApi
-import dev.roava.api.GroupApi
-import dev.roava.api.InventoryApi
-import dev.roava.api.UserApi
+import dev.roava.api.*
 import dev.roava.client.RoavaRequest
 import dev.roava.group.Group
 import dev.roava.json.user.UserData
@@ -181,6 +178,97 @@ class User {
         return groups.toList()
     }
 
+        /**
+     * Method to get a User's Avatar
+     *
+     * Available Values:
+     * 30x30, 48x48, 60x60, 75x75, 100x100, 110x110, 140x140, 150x150, 150x200, 180x180, 250x250, 352x352, 420x420, 720x720
+     * @throws[RuntimeException]
+     * @return[String]
+     */
+    @Throws(RuntimeException::class)
+    fun getAvatar(size: String,isCircular: Boolean): String {
+        var thumbnail = ""
+        val result = runCatching {
+            request.createRequest(ThumbnailApi::class.java, "thumbnails")
+                .getAvatar(id,size,"Png",isCircular)
+                .execute()
+        }
+        result.onFailure { exception ->
+            if (exception is HttpException) {
+                val errorCode = exception.code()
+                val message = exception.message()
+
+                throw RuntimeException("Grabbing thumbnail of user with id ${this.id} failed with message \"$message\" and response code $errorCode")
+            } else {
+                throw RuntimeException("an unknown error has occurred while fetching the user's thumbnail!\n${exception.message}")
+            }
+        }.onSuccess {
+            thumbnail = it.body()?.data?.get(0)?.thumbnail?: ""
+        }
+        return thumbnail
+    }
+
+    /**
+     * Method to get a User's Headshot
+     *
+     * Available Values:
+     * 30x30, 48x48, 60x60, 75x75, 100x100, 110x110, 140x140, 150x150, 150x200, 180x180, 250x250, 352x352, 420x420, 720x720
+     * @throws[RuntimeException]
+     * @return[String]
+     */
+    @Throws(RuntimeException::class)
+    fun getHeadShot(size: String,isCircular: Boolean): String {
+        var thumbnail = ""
+        val result = runCatching {
+            request.createRequest(ThumbnailApi::class.java, "thumbnails")
+                .getHeadShot(id, size, "Png", isCircular)
+                .execute()
+        }
+        result.onFailure { exception ->
+            if (exception is HttpException) {
+                val errorCode = exception.code()
+                val message = exception.message()
+
+                throw RuntimeException("Grabbing headshot of user with id ${this.id} failed with message \"$message\" and response code $errorCode")
+            } else {
+                throw RuntimeException("an unknown error has occurred while fetching the user's headshot!\n${exception.message}")
+            }
+        }.onSuccess {
+            thumbnail = it.body()?.data?.get(0)?.thumbnail ?: ""
+        }
+        return thumbnail
+    }
+    /**
+     * Method to get a User's Bust
+     *
+     * Available Values:
+     * 48x48, 50x50, 60x60, 75x75, 100x100, 150x150, 180x180, 352x352, 420x420
+     * @throws[RuntimeException]
+     * @return[String]
+     */
+    @Throws(RuntimeException::class)
+    fun getBust(size: String,isCircular: Boolean): String {
+        var thumbnail = ""
+        val result = runCatching {
+            request.createRequest(ThumbnailApi::class.java, "thumbnails")
+                .getBust(id, size, "Png", isCircular)
+                .execute()
+        }
+        result.onFailure { exception ->
+            if (exception is HttpException) {
+                val errorCode = exception.code()
+                val message = exception.message()
+
+                throw RuntimeException("Grabbing bust of user with id ${this.id} failed with message \"$message\" and response code $errorCode")
+            } else {
+                throw RuntimeException("an unknown error has occurred while fetching the user's bust!\n${exception.message}")
+            }
+        }.onSuccess {
+            thumbnail = it.body()?.data?.get(0)?.thumbnail ?: ""
+        }
+        return thumbnail
+    }
     /**
      * Method to get if a User is in a group
      *

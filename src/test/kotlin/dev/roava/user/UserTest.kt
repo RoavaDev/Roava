@@ -27,6 +27,7 @@ package dev.roava.user
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import kotlin.test.assertContains
 
 internal class UserTest {
     private val testUser = User(3838771115)
@@ -90,5 +91,17 @@ internal class UserTest {
     @Test
     fun testDescription() {
         assertEquals(testUser.description, "This is a test description")
+    }
+    @Test
+    fun testAvatar() {
+        assertContains(testUser.getAvatar("30x30",true), "https://tr.rbxcdn.com/")
+    }
+    @Test
+    fun testHeadShot(){
+        assertContains(testUser.getHeadShot("48x48", true), "https://tr.rbxcdn.com/")
+    }
+    @Test
+    fun testBust(){
+        assertContains(testUser.getBust("48x48",true), "https://tr.rbxcdn.com/")
     }
 }
