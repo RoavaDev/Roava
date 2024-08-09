@@ -104,4 +104,8 @@ internal class UserTest {
     fun testBust(){
         assertContains(testUser.getBust("48x48",true), "https://tr.rbxcdn.com/")
     }
+    @Test
+    fun testPast(){
+        println(testUser.getPastUsers())
+    }
 }
