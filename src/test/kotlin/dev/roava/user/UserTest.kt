@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import kotlin.test.assertContains
+import kotlin.test.assertIs
 
 internal class UserTest {
     private val testUser = User(3838771115)
@@ -106,6 +107,6 @@ internal class UserTest {
     }
     @Test
     fun testPast(){
-        println(testUser.getPastUsers())
+        assertIs<List<String>>(testUser.getPastUsers())
     }
 }
