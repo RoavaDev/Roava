@@ -25,6 +25,7 @@
 package dev.roava.api
 
 import dev.roava.json.group.GroupData
+import dev.roava.json.group.GroupRankData
 import dev.roava.json.group.RoleListData
 import dev.roava.json.group.RoleRequest
 import dev.roava.json.user.UserRolesData
@@ -52,4 +53,7 @@ interface GroupApi {
 
     @DELETE("/v1/groups/{groupId}/users/{userId}")
     fun exileUser(@Path("groupId") groupId: Int, @Path("userId") userId: Long): Call<Void>
+
+    @GET("v1/groups/{groupId}/roles/{roleSetId}/users")
+    fun getGroupRankMembers(@Path("groupId") groupId: Int, @Path("roleSetId") roleSetId: Int, @Query("limit") limit: Int, @Query("cursor") cursor: String? = null): Call<GroupRankData>
 }

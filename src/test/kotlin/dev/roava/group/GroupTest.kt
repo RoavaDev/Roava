@@ -119,4 +119,9 @@ internal class GroupTest {
 
         assertThrows(RuntimeException::class.java, executable)
     }
+    @Test
+    fun testGroupRankMembers(){
+        val group = Group(16171236).getGroupRankMembers(90545787)
+        assertEquals(group.size, 279)
+    }
 }
