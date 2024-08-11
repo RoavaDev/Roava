@@ -27,9 +27,7 @@ package dev.roava.group
 import dev.roava.api.GroupApi
 import dev.roava.client.RoavaClient
 import dev.roava.client.RoavaRequest
-import dev.roava.json.group.GroupData
-import dev.roava.json.group.GroupRankListData
-import dev.roava.json.group.RoleRequest
+import dev.roava.json.group.*
 import dev.roava.user.User
 import retrofit2.HttpException
 
@@ -317,6 +315,51 @@ class Group {
                 val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
                 for(i in data){
                     members += GroupRankListData(i.hasVerifiedBadge,i.userId,i.username,i.displayName)
+                }
+            }
+        }
+        makeRequest()
+        while(nextPageCursor != null) {
+            makeRequest()
+        }
+        return members
+    }
+    /**
+     * Method to grab all group members with the provided roleset
+     *
+     * @return[GroupRankListData]
+     * @param[roleSetId] The roleSetId of the group rank.
+     * @throws[RuntimeException]
+     */
+    @Throws(RuntimeException::class)
+    fun getMembers(): Map<GroupMemberUserData, GroupMemberRoleData>{
+        val members: MutableMap<GroupMemberUserData, GroupMemberRoleData> = mutableMapOf()
+        var nextPageCursor: String? = null
+        fun makeRequest(){
+            val result = runCatching {
+                request.createRequest(GroupApi::class.java, "groups")
+                    .getGroupMembers(this.id,100, nextPageCursor)
+                    .execute()
+            }
+            result.onFailure { exception ->
+                if (exception is HttpException) {
+                    val errorCode = exception.code()
+                    val message = exception.message()
+
+                    throw RuntimeException("Grabbing members in the group with id ${this.id} failed with message \"$message\" and response code $errorCode")
+                } else {
+                    throw RuntimeException("an unknown error has occurred while fetching the members!\n${exception.message}")
+                }
+            }
+            result.onSuccess {
+                nextPageCursor = it.body()?.nextPageCursor
+                val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
+                for(i in data){
+                    val u = i.user
+                    val r = i.role
+                    val userData = GroupMemberUserData(u.username,u.userId,u.displayName,u.hasVerifiedBadge,u.buildersClubMembershipType)
+                    val roleData = GroupMemberRoleData(r.roleId,r.name,r.description,r.rank,r.memberCount)
+                    members += userData to roleData
                 }
             }
         }

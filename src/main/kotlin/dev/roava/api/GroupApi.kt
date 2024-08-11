@@ -24,10 +24,7 @@
 
 package dev.roava.api
 
-import dev.roava.json.group.GroupData
-import dev.roava.json.group.GroupRankData
-import dev.roava.json.group.RoleListData
-import dev.roava.json.group.RoleRequest
+import dev.roava.json.group.*
 import dev.roava.json.user.UserRolesData
 import retrofit2.Call
 import retrofit2.http.*
@@ -56,4 +53,7 @@ interface GroupApi {
 
     @GET("v1/groups/{groupId}/roles/{roleSetId}/users")
     fun getGroupRankMembers(@Path("groupId") groupId: Int, @Path("roleSetId") roleSetId: Int, @Query("limit") limit: Int, @Query("cursor") cursor: String? = null): Call<GroupRankData>
+
+    @GET("v1/groups/{groupId}/users")
+    fun getGroupMembers(@Path("groupId") groupId: Int, @Query("limit") limit: Int, @Query("cursor") cursor: String? = null): Call<GroupMemberData>
 }
