@@ -125,7 +125,7 @@ internal class GroupTest {
     }
     @Test
     fun testGroupRankMembers(){
-        val group = Group(16171236).getGroupRankMembers(90545787)
+        val group = testGroup.getGroupRankMembers(88561132)
         assertIs<List<GroupMemberListData>>(group)
     }
     @Test
