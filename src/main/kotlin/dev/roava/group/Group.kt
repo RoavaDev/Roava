@@ -354,11 +354,7 @@ class Group {
                 nextPageCursor = it.body()?.nextPageCursor
                 val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
                 for(i in data){
-                    val u = i.user
-                    val r = i.role
-                    val userData = GroupMemberUserData(u.username,u.userId,u.displayName,u.hasVerifiedBadge,u.buildersClubMembershipType)
-                    val roleData = GroupMemberRoleData(r.roleId,r.name,r.description,r.rank,r.memberCount)
-                    members += userData to roleData
+                    members += i.user to i.role
                 }
             }
         }
