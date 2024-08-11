@@ -325,10 +325,9 @@ class Group {
         return members
     }
     /**
-     * Method to grab all group members with the provided roleset
+     * Method to grab all group members
      *
-     * @return[GroupRankListData]
-     * @param[roleSetId] The roleSetId of the group rank.
+     * @return[Map]
      * @throws[RuntimeException]
      */
     @Throws(RuntimeException::class)
