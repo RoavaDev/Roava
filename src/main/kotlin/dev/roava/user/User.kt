@@ -316,10 +316,12 @@ class User {
      */
     @Throws(RuntimeException::class)
     fun getPastUsers(): List<String> {
+        var cursor: String? = null
         val pastNames: MutableList<String> = mutableListOf()
+        fun makeRequest(){
             val result = runCatching {
                 request.createRequest(UserApi::class.java, "users")
-                    .getPastUsernames(id, "100")
+                    .getPastUsernames(id, "100", cursor)
                     .execute()
             }
             result.onFailure { exception ->
@@ -333,11 +335,17 @@ class User {
                 }
             }
             result.onSuccess {
+                cursor = it.body()?.nextPageCursor
                 val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
                 for (i in data) {
                     pastNames += i.name ?: continue
                 }
             }
+        }
+        makeRequest()
+        while(cursor != null){
+            makeRequest()
+        }
         return pastNames
     }
 }

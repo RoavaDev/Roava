@@ -46,5 +46,5 @@ interface UserApi {
     fun getUsernameInformation(@Body data: UserNameRequest): Call<UserListData>
 
     @GET("/v1/users/{userId}/username-history")
-    fun getPastUsernames(@Path("userId") userId: Long, @Query("limit") limit: String): Call<UserNameHistoryData>
+    fun getPastUsernames(@Path("userId") userId: Long, @Query("limit") limit: String, @Query("cursor") cursor: String? = null): Call<UserNameHistoryData>
 }

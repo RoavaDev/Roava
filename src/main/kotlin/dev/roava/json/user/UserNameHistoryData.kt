@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class UserNameHistoryData(
+    @JsonProperty("nextPageCursor")
+    val nextPageCursor: String?,
     @JsonProperty("data")
     val data: List<UserNameHistory>
 )

@@ -24,11 +24,9 @@
 
 package dev.roava.user
 
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
-import kotlin.test.assertIs
 
 internal class UserTest {
     private val testUser = User(3838771115)
@@ -107,6 +105,6 @@ internal class UserTest {
     }
     @Test
     fun testPast(){
-        assertIs<List<String>>(testUser.getPastUsers())
+        assertEquals(User(1157409).getPastUsers().size, 127)
     }
 }
