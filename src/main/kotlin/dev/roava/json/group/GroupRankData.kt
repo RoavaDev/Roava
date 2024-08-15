@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 RoavaDev
+ * Copyright (c) 2024 RoavaDev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,27 @@
  * SOFTWARE.
  */
 
-package dev.roava.api
+package dev.roava.json.group
 
-import dev.roava.json.user.UserData
-import dev.roava.json.user.UserListData
-import dev.roava.json.user.UserNameHistoryData
-import dev.roava.json.user.UserNameRequest
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
-/**
- * UserApi (for internal use only)
- */
-interface UserApi {
-    @GET("/v1/users/{userId}")
-    fun getUserInformation(@Path("userId") userId: Long): Call<UserData>
-
-    @POST("/v1/usernames/users")
-    fun getUsernameInformation(@Body data: UserNameRequest): Call<UserListData>
-
-    @GET("/v1/users/{userId}/username-history")
-    fun getPastUsernames(@Path("userId") userId: Long, @Query("limit") limit: String, @Query("cursor") cursor: String? = null): Call<UserNameHistoryData>
-}
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class GroupRankData(
+    @JsonProperty("nextPageCursor")
+    val nextPageCursor: String?,
+    @JsonProperty("previousPageCursor")
+    val previousPageCursor: String?,
+    @JsonProperty("data")
+    val data: List<GroupRankListData>
+)
+data class GroupRankListData(
+    @JsonProperty("hasVerifiedBadge")
+    val hasVerifiedBadge: Boolean?,
+    @JsonProperty("userId")
+    val userId: Long?,
+    @JsonProperty("username")
+    val username: String?,
+    @JsonProperty("displayName")
+    val displayName: String?
+)

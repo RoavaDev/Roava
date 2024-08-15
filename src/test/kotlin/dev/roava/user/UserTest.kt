@@ -24,9 +24,8 @@
 
 package dev.roava.user
 
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
 
 internal class UserTest {
@@ -103,5 +102,9 @@ internal class UserTest {
     @Test
     fun testBust(){
         assertContains(testUser.getBust("48x48",true), "https://tr.rbxcdn.com/")
+    }
+    @Test
+    fun testPast(){
+        assertEquals(User(1157409).getPastUsers().size, 127)
     }
 }

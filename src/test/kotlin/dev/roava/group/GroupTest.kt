@@ -24,9 +24,13 @@
 
 package dev.roava.group
 
+import dev.roava.json.group.GroupMemberListData
+import dev.roava.json.group.GroupMemberRoleData
+import dev.roava.json.group.GroupMemberUserData
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import kotlin.test.assertIs
 
 internal class GroupTest {
     private val testGroup = Group(15771240)
@@ -118,5 +122,14 @@ internal class GroupTest {
         }
 
         assertThrows(RuntimeException::class.java, executable)
+    }
+    @Test
+    fun testGroupRankMembers(){
+        val group = testGroup.getGroupRankMembers(88561132)
+        assertIs<List<GroupMemberListData>>(group)
+    }
+    @Test
+    fun testGroupMembers(){
+        assertIs<Map<GroupMemberUserData,GroupMemberRoleData>>(testGroup.getMembers())
     }
 }

@@ -124,7 +124,7 @@ class User {
      */
     @Throws(RuntimeException::class)
     fun getFriends(): List<User> {
-        var friends = mutableListOf<User>()
+        val friends = mutableListOf<User>()
 
         try {
             val userData = request.createRequest(FriendApi::class.java, "friends")
@@ -306,5 +306,46 @@ class User {
         gamepasses ?: false
     }.getOrElse {
         throw RuntimeException("Could not fetch the user's items!")
+    }
+
+    /**
+     * Method to get a user's past 100 usernames
+     *
+     * @throws[RuntimeException]
+     * @return[List]
+     */
+    @Throws(RuntimeException::class)
+    fun getPastUsers(): List<String> {
+        var cursor: String? = null
+        val pastNames: MutableList<String> = mutableListOf()
+        fun makeRequest(){
+            val result = runCatching {
+                request.createRequest(UserApi::class.java, "users")
+                    .getPastUsernames(id, "100", cursor)
+                    .execute()
+            }
+            result.onFailure { exception ->
+                if (exception is HttpException) {
+                    val errorCode = exception.code()
+                    val message = exception.message()
+
+                    throw RuntimeException("Grabbing past usernames of user with id ${this.id} failed with message \"$message\" and response code $errorCode")
+                } else {
+                    throw RuntimeException("an unknown error has occurred while fetching the user's past names!\n${exception.message}")
+                }
+            }
+            result.onSuccess {
+                cursor = it.body()?.nextPageCursor
+                val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
+                for (i in data) {
+                    pastNames += i.name ?: continue
+                }
+            }
+        }
+        makeRequest()
+        while(cursor != null){
+            makeRequest()
+        }
+        return pastNames
     }
 }
