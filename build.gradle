@@ -78,10 +78,10 @@ publishing {
             def mavenUsername = findProperty('mavenUsername')
             def mavenPassword = findProperty('mavenPassword')
 
-            if (isReleaseVersion) {
-                url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2'
+            if(isReleaseVersion) {
+                url = uri("https://m.cpy.wtf/releases")
             } else {
-                url = 'https://s01.oss.sonatype.org/content/repositories/snapshots'
+                url = uri("https://m.cpy.wtf/snapshots")
             }
 
             if (mavenUsername != null && mavenPassword != null) {
@@ -93,16 +93,7 @@ publishing {
         }
     }
 
-    def signingKey = findProperty('signingKey')
-    def signingPassword = findProperty('signingPassword')
 
-    if (isReleaseVersion && signingKey != null && signingPassword != null) {
-        signing {
-            useInMemoryPgpKeys(signingKey, signingPassword)
-
-            sign(publishing.publications.mavenJava)
-        }
-    }
 }
 
 test {
@@ -128,8 +119,8 @@ java {
 
 jacocoTestReport() {
     reports {
-        xml.enabled(true)
-        html.enabled(true)
+        xml.required = true
+        html.required = true
     }
 }
 
