@@ -8,7 +8,7 @@
 Roava is a quick, and easy to set up Roblox API wrapper written in Kotlin, but it can support other JVM languages as well. 
 
 ## Setup
-This project has been uploaded to the Maven central repository. If you would like to add the project as a dependency, you may do so in Gradle by:
+This project has a custom central repository. If you would like to add the project as a dependency, you may do so in Gradle by:
 ```groovy
 repositories {
     url = uri("https://m.cpy.wtf/releases")
