@@ -11,7 +11,7 @@ Roava is a quick, and easy to set up Roblox API wrapper written in Kotlin, but i
 This project has been uploaded to the Maven central repository. If you would like to add the project as a dependency, you may do so in Gradle by:
 ```groovy
 repositories {
-    mavenCentral()
+    url = uri("https://m.cpy.wtf/releases")
 }
 
 dependencies {
@@ -23,7 +23,7 @@ If you would like to test a snapshot version, you must add the sonatype snapshot
 ```groovy
 repositories {
     maven {
-        url = 'https://s01.oss.sonatype.org/content/repositories/snapshots'
+        url = 'https://m.cpy.wtf/snapshots'
     }
 }
 

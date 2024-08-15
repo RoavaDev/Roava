@@ -78,11 +78,7 @@ publishing {
             def mavenUsername = findProperty('mavenUsername')
             def mavenPassword = findProperty('mavenPassword')
 
-            if (isReleaseVersion) {
-                url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2'
-            } else {
-                url = 'https://s01.oss.sonatype.org/content/repositories/snapshots'
-            }
+            url = uri("https://m.cpy.wtf/releases")
 
             if (mavenUsername != null && mavenPassword != null) {
                 credentials {
@@ -128,8 +124,8 @@ java {
 
 jacocoTestReport() {
     reports {
-        xml.enabled(true)
-        html.enabled(true)
+        xml.required = true
+        html.required = true
     }
 }
 
