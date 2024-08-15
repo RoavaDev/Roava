@@ -32,11 +32,20 @@ import okhttp3.Response
  * For Intercepting calls and adding the X-CSRF-TOKEN to the header if the original request failed (for internal use only).
  */
 internal class RoavaInterceptor: Interceptor {
+    private val header = "X-CSRF-TOKEN"
+
+    private var token: String? = null
+
     override fun intercept(chain: Interceptor.Chain): Response {
-        var response = chain.proceed(chain.request())
+        val orig = chain.request()
+        val request = orig.newBuilder()
+            .header(header, token ?: "")
+            .build()
+
+        var response = chain.proceed(request)
 
         if (response.code() == 403 && !hasToken(response)) {
-            val token: String? = response.header("X-CSRF-TOKEN")
+            token = response.header(header)
 
             token?.let {
                 response.close()
@@ -50,7 +59,7 @@ internal class RoavaInterceptor: Interceptor {
 
     private fun hasToken(response: Response?): Boolean {
         response?.let {
-            return !it.request().header("X-CSRF-TOKEN").isNullOrEmpty()
+            return !it.request().header(header).isNullOrEmpty()
         }
 
         return false
@@ -58,7 +67,7 @@ internal class RoavaInterceptor: Interceptor {
 
     private fun retry(request: Request?, token: String): Request? {
         return request?.newBuilder()
-            ?.header("X-CSRF-TOKEN", token)
+            ?.header(header, token)
             ?.build()
     }
 }

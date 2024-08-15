@@ -58,7 +58,7 @@ class RoavaClient {
             throw RuntimeException("Your cookie is not set properly! Please make sure that you include the entirety of the string, including the _|WARNING:-")
         }
 
-        request = dev.roava.client.RoavaRequest(cookie)
+        request = RoavaRequest(cookie)
         this.cookie = cookie
 
         try {
