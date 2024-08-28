@@ -24,7 +24,7 @@
 
 package dev.roava.group
 
-import dev.roava.json.group.GroupMemberListData
+import dev.roava.json.group.GroupMemberData
 import dev.roava.json.group.GroupMemberRoleData
 import dev.roava.json.group.GroupMemberUserData
 import org.junit.jupiter.api.Test
@@ -126,7 +126,7 @@ internal class GroupTest {
     @Test
     fun testGroupRankMembers(){
         val group = testGroup.getGroupRankMembers(88561132)
-        assertIs<List<GroupMemberListData>>(group)
+        assertIs<List<GroupMemberData>>(group)
     }
     @Test
     fun testGroupMembers(){

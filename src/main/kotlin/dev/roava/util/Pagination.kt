@@ -22,41 +22,38 @@
  * SOFTWARE.
  */
 
-package dev.roava.json.group
+package dev.roava.util
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import dev.roava.client.RoavaClient
+import dev.roava.client.RoavaRequest
+import kotlin.reflect.KFunction
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class GroupMemberData (
-    @JsonProperty("user")
-    val user: GroupMemberUserData,
-    @JsonProperty("role")
-    val role: GroupMemberRoleData
-)
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class GroupMemberUserData (
-    @JsonProperty("username")
-    val username: String?,
-    @JsonProperty("userId")
-    val userId: Long?,
-    @JsonProperty("displayName")
-    val displayName: String?,
-    @JsonProperty("hasVerifiedBadge")
-    val hasVerifiedBadge: Boolean?,
-    @JsonProperty("buildersClubMembershipType")
-    val buildersClubMembershipType: Long?
-)
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class GroupMemberRoleData (
-    @JsonProperty("id")
-    val roleId: Long?,
-    @JsonProperty("name")
-    val name: String?,
-    @JsonProperty("description")
-    val description: String?,
-    @JsonProperty("rank")
-    val rank: Long?,
-    @JsonProperty("memberCount")
-    val memberCount: Long?
-)
+// T would be a data class
+class Pagination<T>(
+    private val url: String,
+    private val client: RoavaClient,
+
+    @JsonProperty("nextPageCursor")
+    private val nextCursor: String?,
+
+    @JsonProperty("previousPageCursor")
+    private val previousCursor: String?,
+
+    @JsonProperty("data")
+    private val data: List<T>? // this is where we actually get what we are after
+) {
+    // this function might or might not be necessary
+    private fun paginate(function: () -> Any): Pagination<T> {
+        // return a new pagination object where you take the current URL with the cursor and return a new pagination object
+        function
+    }
+
+    fun next(): Pagination<T>? {
+        return this.nextCursor?.let { this.paginate(it) }
+    }
+
+    fun previous(): Pagination<T>? {
+        return this.previousCursor?.let { this.paginate(it) };
+    }
+}

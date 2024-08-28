@@ -29,6 +29,8 @@ import dev.roava.client.RoavaClient
 import dev.roava.client.RoavaRequest
 import dev.roava.json.group.*
 import dev.roava.user.User
+import dev.roava.util.Pagination
+import retrofit2.Call
 import retrofit2.HttpException
 
 /**
@@ -336,9 +338,15 @@ class Group {
         var nextPageCursor: String? = null
         fun makeRequest(){
             val result = runCatching {
-                request.createRequest(GroupApi::class.java, "groups")
-                    .getGroupMembers(this.id,100, nextPageCursor)
-                    .execute()
+//                request.createRequest(GroupApi::class.java, "groups")
+//                    .getGroupMembers(this.id,100, nextPageCursor)
+//                    .execute()
+
+                val request_ = request.createRequest(GroupApi::class.java, "groups")::getGroupMembers
+
+
+                request_(this.id,100,nextPageCursor).execute()
+
             }
             result.onFailure { exception ->
                 if (exception is HttpException) {
@@ -351,11 +359,11 @@ class Group {
                 }
             }
             result.onSuccess {
-                nextPageCursor = it.body()?.nextPageCursor
-                val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
-                for(i in data){
-                    members += i.user to i.role
-                }
+//                nextPageCursor = it.
+//                val data = it.body()?.data ?: throw RuntimeException("An unknown error has occurred")
+//                for(i in data){
+//                    members += i.user to i.role
+//                }
             }
         }
         makeRequest()

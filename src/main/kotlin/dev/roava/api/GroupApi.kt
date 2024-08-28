@@ -26,6 +26,7 @@ package dev.roava.api
 
 import dev.roava.json.group.*
 import dev.roava.json.user.UserRolesData
+import dev.roava.util.Pagination
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -55,5 +56,5 @@ interface GroupApi {
     fun getGroupRankMembers(@Path("groupId") groupId: Int, @Path("roleSetId") roleSetId: Int, @Query("limit") limit: Int, @Query("cursor") cursor: String? = null): Call<GroupRankData>
 
     @GET("v1/groups/{groupId}/users")
-    fun getGroupMembers(@Path("groupId") groupId: Int, @Query("limit") limit: Int, @Query("cursor") cursor: String? = null): Call<GroupMemberData>
+    fun getGroupMembers(@Path("groupId") groupId: Int, @Query("limit") limit: Int, @Query("cursor") cursor: String? = null): Call<Pagination<GroupMemberData>>
 }
