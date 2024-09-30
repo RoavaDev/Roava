@@ -343,8 +343,7 @@ class Group {
 //                    .execute()
 
                 val request_ = request.createRequest(GroupApi::class.java, "groups")::getGroupMembers
-
-
+                Pagination<GroupMemberData>.next()
                 request_(this.id,100,nextPageCursor).execute()
 
             }

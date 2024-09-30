@@ -27,6 +27,7 @@ package dev.roava.util
 import com.fasterxml.jackson.annotation.JsonProperty
 import dev.roava.client.RoavaClient
 import dev.roava.client.RoavaRequest
+import retrofit2.Call
 import kotlin.reflect.KFunction
 
 // T would be a data class
@@ -46,7 +47,7 @@ class Pagination<T>(
     // this function might or might not be necessary
     private fun paginate(function: () -> Any): Pagination<T> {
         // return a new pagination object where you take the current URL with the cursor and return a new pagination object
-        function
+        return function.execute()
     }
 
     fun next(): Pagination<T>? {
