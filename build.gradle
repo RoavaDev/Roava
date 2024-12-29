@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -41,6 +40,8 @@ dependencies {
 publishing {
     publications {
         create("mavenJava", MavenPublication) {
+            from(components["java"])
+
             pom {
                 name = 'roava'
                 description = 'A unique Roblox API wrapper written in Java'
