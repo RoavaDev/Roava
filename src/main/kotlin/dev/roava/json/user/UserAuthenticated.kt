@@ -33,6 +33,6 @@ data class UserAuthenticated(
     val name: String?,
     @JsonProperty("displayName")
     val displayName: String?,
-    @JsonProperty("userId")
+    @JsonProperty("id")
     val id: Long?,
 )

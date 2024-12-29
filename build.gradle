@@ -1,4 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
@@ -37,10 +39,16 @@ dependencies {
     compileOnly 'org.jetbrains.dokka:dokka-base:2.0.0'
 }
 
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 publishing {
     publications {
-        create("mavenJava", MavenPublication) {
-            from(components["java"])
+        mavenJava(MavenPublication) {
+            from components.java
 
             pom {
                 name = 'roava'
@@ -105,6 +113,10 @@ tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = "11"
     }
+}
+
+tasks.withType(KotlinJvmCompile.class).configureEach {
+    jvmTargetValidationMode = JvmTargetValidationMode.WARNING
 }
 
 dokka {

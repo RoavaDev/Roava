@@ -64,7 +64,7 @@ class RoavaClient {
 
         try {
             // Make a request to get the current Client's information
-            val authData = request.createRequest(UserApi::class.java)
+            val authData = request.createRequest(UserApi::class.java, "users")
                 .getAuthenticatedUser()
                 .execute()
                 .body()

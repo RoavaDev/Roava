@@ -37,7 +37,7 @@ import retrofit2.HttpException
  */
 class Group {
     private val request: RoavaRequest = RoavaRequest()
-    private lateinit var client: dev.roava.client.RoavaClient
+    private lateinit var client: RoavaClient
 
     val name: String
     val description: String
