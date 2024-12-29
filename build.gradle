@@ -1,7 +1,8 @@
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
     id 'org.jetbrains.dokka' version '1.7.10'
     id 'maven-publish'
     id 'java-library'
@@ -40,8 +41,6 @@ dependencies {
 publishing {
     publications {
         create("mavenJava", MavenPublication) {
-            from(components["java"])
-
             pom {
                 name = 'roava'
                 description = 'A unique Roblox API wrapper written in Java'
@@ -101,12 +100,10 @@ test {
     useJUnitPlatform()
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = '1.8'
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = '1.8'
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 tasks.named("dokkaHtml", DokkaTask) {
