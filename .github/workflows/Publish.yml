@@ -22,7 +22,7 @@ jobs:
           distribution: "zulu"
 
       - name: "Generate Dokka"
-        uses: gradle/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           arguments: dokkaHtml
 
