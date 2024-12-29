@@ -21,6 +21,6 @@ jobs:
           distribution: "zulu"
 
       - name: "Build with Gradle"
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/setup-gradle@v3
         with:
           arguments: build
