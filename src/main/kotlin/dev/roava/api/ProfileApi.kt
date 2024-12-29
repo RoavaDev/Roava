@@ -24,7 +24,6 @@
 
 package dev.roava.api
 
-import dev.roava.json.ProfileData
 import retrofit2.Call
 import retrofit2.http.GET
 

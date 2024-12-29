@@ -1,3 +1,5 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.7.0'
     id 'org.jetbrains.dokka' version '1.7.10'
@@ -8,15 +10,14 @@ plugins {
 }
 
 group = 'dev.roava'
-sourceCompatibility = JavaVersion.VERSION_1_8
 
 ext {
-    slf4jVersion = '2.0.0'
-    junitVersion = '5.9.0'
-    jacksonVersion = '2.13.3'
-    retrofitVersion = '2.9.0'
+    slf4jVersion = '2.0.16'
+    junitVersion = '5.11.4'
+    jacksonVersion = '2.13.4.2'
+    retrofitVersion = '2.11.0'
 
-    isReleaseVersion = !version.endsWith("SNAPSHOT")
+    isReleaseVersion = !project.version.toString().endsWith("SNAPSHOT")
 }
 
 repositories {
@@ -38,8 +39,8 @@ dependencies {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        create("mavenJava", MavenPublication) {
+            from(components["java"])
 
             pom {
                 name = 'roava'
@@ -79,9 +80,9 @@ publishing {
             def mavenPassword = findProperty('mavenPassword')
 
             if(isReleaseVersion) {
-                url = uri("https://m.cpy.wtf/releases")
+                url = uri('https://m.cpy.wtf/releases')
             } else {
-                url = uri("https://m.cpy.wtf/snapshots")
+                url = uri('https://m.cpy.wtf/snapshots')
             }
 
             if (mavenUsername != null && mavenPassword != null) {
@@ -108,7 +109,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = '1.8'
 }
 
-tasks.named("dokkaHtml") {
+tasks.named("dokkaHtml", DokkaTask) {
     suppressInheritedMembers.set(true)
 }
 
