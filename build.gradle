@@ -35,7 +35,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
 
-    compileOnly 'org.jetbrains.dokka:dokka-base:1.7.10'
+    compileOnly 'org.jetbrains.dokka:dokka-base:2.0.0'
 }
 
 publishing {
@@ -106,7 +106,7 @@ tasks.withType(KotlinCompile).configureEach {
     }
 }
 
-tasks.named("dokkaHtml", DokkaTask) {
+dokka {
     suppressInheritedMembers.set(true)
 }
 
