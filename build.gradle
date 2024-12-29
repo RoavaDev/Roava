@@ -1,5 +1,4 @@
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '2.1.0'
@@ -98,12 +97,6 @@ publishing {
 
 test {
     useJUnitPlatform()
-}
-
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 tasks.named("dokkaHtml", DokkaTask) {

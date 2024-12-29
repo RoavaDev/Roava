@@ -24,7 +24,6 @@
 
 package dev.roava.client
 
-import dev.roava.api.ProfileApi
 import dev.roava.api.UserApi
 import dev.roava.user.User
 
@@ -65,14 +64,14 @@ class RoavaClient {
 
         try {
             // Make a request to get the current Client's information
-            val profileData = request.createRequest(UserApi::class.java)
+            val authData = request.createRequest(UserApi::class.java)
                 .getAuthenticatedUser()
                 .execute()
                 .body()
 
-            id = profileData?.id!!
-            name = profileData.name!!
-            displayName = profileData.displayName!!
+            id = authData?.id!!
+            name = authData.name!!
+            displayName = authData.displayName!!
         } catch(exception: Exception) {
             throw RuntimeException("Error occurred while authenticating! Your cookie might have been invalidated.")
         }
