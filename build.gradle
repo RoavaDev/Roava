@@ -84,20 +84,17 @@ publishing {
 
     repositories {
         maven {
-            def mavenUsername = findProperty('mavenUsername')
-            def mavenPassword = findProperty('mavenPassword')
+            def mavenKey = findProperty('mavenKey')
+            url = uri('https://pkg.wtf')
 
-            if(isReleaseVersion) {
-                url = uri('https://m.cpy.wtf/releases')
-            } else {
-                url = uri('https://m.cpy.wtf/snapshots')
-            }
-
-            if (mavenUsername != null && mavenPassword != null) {
-                credentials {
-                    username = mavenUsername
-                    password = mavenPassword
+            if (mavenKey != null) {
+                credentials(HttpHeaderCredentials) {
+                    name = 'x-api-key'
+                    value = mavenKey
                 }
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
             }
         }
     }
